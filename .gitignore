@@ -1,0 +1,6 @@
+# Build folder
+build/
+
+# Cache and the compile command file from the build folder
+.cache/
+compile_commands.json
