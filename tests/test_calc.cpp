@@ -16,5 +16,7 @@ int main(int argc, char *argv[]) {
     std::cout << "divide(1,0) threw: " << ex.what() << "\n";
   }
 
+  std::cout << "SQRT of 10 = " << calc::squareRoot(numb1) << "\n";
+
   return 0;
 }

@@ -16,6 +16,8 @@ Resources:
 - <https://doc.qt.io/qt-6/layout.html>
 - <https://doc.qt.io/qt-6/signalsandslots.html>
 
+- [ASM x64_cheatsheet from Brown University](https://cs.brown.edu/courses/cs033/docs/guides/x64_cheatsheet.pdf)
+
 Sometimes have to run:
 
 ```

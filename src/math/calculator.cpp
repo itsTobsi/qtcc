@@ -11,4 +11,6 @@ double divide(double a, double b) {
     throw std::domain_error("Cannot divide by zero");
   return a / b;
 }
+
+double squareRoot(double a) { return a * a; }
 } // namespace calc

@@ -1,23 +1,32 @@
 #include "mainwindow.h"
 #include "math/calculator.h"
 
-// Other
+// QT
 #include <QComboBox>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <qcombobox.h>
 
+// Could start using a Designer UI file
+// (https://doc.qt.io/qt-6/designer-using-a-ui-file.html)
+// Or a style sheet.
 MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
   m_left = new QLineEdit(this);
   m_right = new QLineEdit(this);
   m_op = new QComboBox(this);
-  m_op->addItems({"+", "-", "*", "/"});
   m_result = new QLabel("= ?", this);
+
+  m_left->setValidator(new QDoubleValidator(this));
+  m_right->setValidator(new QDoubleValidator(this));
+  m_op->addItems({"+", "-", "*", "/"});
 
   auto *equals = new QPushButton("=", this);
   connect(equals, &QPushButton::clicked, this, &MainWindow::calculate);
+  connect(m_left, &QLineEdit::returnPressed, this, &MainWindow::calculate);
+  connect(m_right, &QLineEdit::returnPressed, this, &MainWindow::calculate);
 
   auto *row = new QHBoxLayout;
   row->addWidget(m_left);
@@ -30,6 +39,10 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
   layout->addWidget(m_result);
 
   setWindowTitle("Qt Calculator");
+
+  /*
+   * When using squareRoot m_right should be hidden.
+   * */
 }
 
 void MainWindow::calculate() {
