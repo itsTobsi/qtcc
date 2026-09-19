@@ -15,6 +15,7 @@ public:
 
 private slots:
   void calculate();
+  void onOperatorChange();
 
 private:
   QLineEdit *m_left;

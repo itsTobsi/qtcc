@@ -9,6 +9,8 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <qcombobox.h>
+#include <qlineedit.h>
+#include <qobject.h>
 
 // Could start using a Designer UI file
 // (https://doc.qt.io/qt-6/designer-using-a-ui-file.html)
@@ -21,12 +23,14 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
 
   m_left->setValidator(new QDoubleValidator(this));
   m_right->setValidator(new QDoubleValidator(this));
-  m_op->addItems({"+", "-", "*", "/"});
+  m_op->addItems({"+", "-", "*", "/", "sqrt", "pow"});
 
   auto *equals = new QPushButton("=", this);
   connect(equals, &QPushButton::clicked, this, &MainWindow::calculate);
   connect(m_left, &QLineEdit::returnPressed, this, &MainWindow::calculate);
   connect(m_right, &QLineEdit::returnPressed, this, &MainWindow::calculate);
+  connect(m_op, &QComboBox::currentIndexChanged, this,
+          &MainWindow::onOperatorChange);
 
   auto *row = new QHBoxLayout;
   row->addWidget(m_left);
@@ -39,10 +43,6 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
   layout->addWidget(m_result);
 
   setWindowTitle("Qt Calculator");
-
-  /*
-   * When using squareRoot m_right should be hidden.
-   * */
 }
 
 void MainWindow::calculate() {
@@ -60,9 +60,23 @@ void MainWindow::calculate() {
       r = calc::multiply(leftNumb, rightNumb);
     else if (operation == "/")
       r = calc::divide(leftNumb, rightNumb);
+    else if (operation == "sqrt")
+      r = calc::squareRoot(leftNumb);
+    else if (operation == "pow")
+      r = calc::power(leftNumb, rightNumb);
 
     m_result->setText(QString("= %1").arg(r));
   } catch (const std::exception &e) {
     m_result->setText(e.what());
+  }
+}
+
+void MainWindow::onOperatorChange() {
+  const QString op = m_op->currentText();
+
+  if (op == "sqrt") {
+    m_right->setVisible(false);
+  } else {
+    m_right->setVisible(true);
   }
 }

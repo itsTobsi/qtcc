@@ -1,4 +1,5 @@
 #include "calculator.h"
+#include <cmath>
 #include <stdexcept>
 
 namespace calc {
@@ -12,5 +13,6 @@ double divide(double a, double b) {
   return a / b;
 }
 
-double squareRoot(double a) { return a * a; }
+double squareRoot(double a) { return sqrt(a); }
+double power(double a, double b) { return std::pow(a, b); }
 } // namespace calc
